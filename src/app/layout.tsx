@@ -2,6 +2,8 @@ import { ClerkProvider,SignedOut,SignedIn,SignInButton,UserButton } from "@clerk
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import {AntdRegistry} from "@ant-design/nextjs-registry";
+import ThemeProvider from "@/providers/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -19,13 +21,16 @@ export default function RootLayout({
     <ClerkProvider>
     <html lang="en">
       <body className={inter.className}>
-      <header>
-           
+        
+          <AntdRegistry>
+            <ThemeProvider>
+              {children}
+            </ThemeProvider>
             
-          </header>
-          <main>
-          {children}
-          </main>  
+          </AntdRegistry>
+          
+            
+        
         
       </body>
     </html>
