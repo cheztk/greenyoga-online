@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import {AntdRegistry} from "@ant-design/nextjs-registry";
 import ThemeProvider from "@/providers/theme-provider";
+import { connectMongoDB } from "@/config/database-config";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -12,11 +13,12 @@ export const metadata: Metadata = {
   description: "An e-learning platform for yoga enthusiasts.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  await connectMongoDB();
   return (
     <ClerkProvider>
     <html lang="en">
