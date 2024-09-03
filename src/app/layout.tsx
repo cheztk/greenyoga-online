@@ -5,6 +5,7 @@ import "./globals.css";
 import {AntdRegistry} from "@ant-design/nextjs-registry";
 import ThemeProvider from "@/providers/theme-provider";
 import { connectMongoDB } from "@/config/database-config";
+import LayoutProvider from "@/providers/layout-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,10 @@ export default async function RootLayout({
         
           <AntdRegistry>
             <ThemeProvider>
-              {children}
+              <LayoutProvider>
+                {children}
+              </LayoutProvider>
+              
             </ThemeProvider>
             
           </AntdRegistry>
