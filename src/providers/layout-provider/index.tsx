@@ -7,10 +7,13 @@ import Header from './components/header';
 import { getCurrentUserFromMongoDB } from '@/server-actions/user';
 import { message } from 'antd';
 import Spinner from '@/components/spinner';
+import { IUser } from '@/interfaces';
+import usersGlobalStore, { IUsersGlobalStore } from '@/store/users-store';
 
 function LayoutProvider({children}: {children: React.ReactNode}) {
   const [loading, setLoading] = useState(false);
-  const [currentUserData, setCurrentUserData] = useState(null);
+  const {setCurrentUserData}:IUsersGlobalStore = usersGlobalStore() as IUsersGlobalStore
+  //const [currentUserData, setCurrentUserData] = useState(null);
   const pathName = usePathname();
   const isAuthRoute = pathName.includes('/sign');
 
@@ -24,7 +27,7 @@ function LayoutProvider({children}: {children: React.ReactNode}) {
         throw new Error('An error occurred while fetching user data');
       }
     }catch(error:any){
-      setCurrentUserData(null);
+      
       message.error(error.message);
     }finally{
       setLoading(false);
@@ -51,7 +54,7 @@ function LayoutProvider({children}: {children: React.ReactNode}) {
   }
     return (
     <div>
-        <Header currentUserData={currentUserData} />
+        <Header  />
         <div className="p-5">
            {children} 
         </div>
