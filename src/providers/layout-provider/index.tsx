@@ -9,10 +9,11 @@ import { message } from 'antd';
 import Spinner from '@/components/spinner';
 import { IUser } from '@/interfaces';
 import usersGlobalStore, { IUsersGlobalStore } from '@/store/users-store';
+import path from 'path';
 
 function LayoutProvider({children}: {children: React.ReactNode}) {
   const [loading, setLoading] = useState(false);
-  const {setCurrentUserData}:IUsersGlobalStore = usersGlobalStore() as IUsersGlobalStore
+  const {setCurrentUserData,currentUserData}:IUsersGlobalStore = usersGlobalStore() as IUsersGlobalStore
   //const [currentUserData, setCurrentUserData] = useState(null);
   const pathName = usePathname();
   const isAuthRoute = pathName.includes('/sign');
@@ -35,11 +36,11 @@ function LayoutProvider({children}: {children: React.ReactNode}) {
   }
 
   useEffect(() => {
-    if(!isAuthRoute){
+    if(!isAuthRoute && !currentUserData){
       getCurrentUser();
     }
     
-  },[])
+  },[pathName])
 
   if(isAuthRoute){
     return children
